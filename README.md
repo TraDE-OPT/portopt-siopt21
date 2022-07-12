@@ -21,7 +21,7 @@ If you find this code useful, please cite the above-mentioned paper:
 ```
 ## Acknowledgments
 
-* | !(<euflag.png>) | This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement no. 861137.  |
+* | ![](<euflag.png>) | This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement no. 861137.  |
   |----------|----------|
 * The data included in this repository has been downloaded from https://stanford.edu/class/engr108/data/ [Accessed March 27, 2021]. Used with permission.
 
