@@ -11,12 +11,14 @@ Convergence plots are saved in the file `test2.pdf`.
 
 If you find this code useful, please cite the above-mentioned paper:
 ```BibTeX
-@article{bcln2021,
-  author = {Bredies, Kristian and Chenchene, Enis and Lorenz, Dirk A. and Naldi, Emanuele},
-  title = {Degenerate Preconditioned Proximal Point algorithms},
-  journal = {SIAM Journal on Optimization},
-  year = {2021},
-  note = {In press}
+@article{bcln2022,
+	author = {Bredies, Kristian and Chenchene, Enis and Lorenz, Dirk A. and Naldi, Emanuele},
+	title = {Degenerate Preconditioned Proximal Point Algorithms},
+	journal = {SIAM Journal on Optimization},
+	volume = {32},
+	number = {3},
+	pages = {2376--2401},
+	year = {2022}
 }
 ```
 ## Acknowledgments
