@@ -1,7 +1,7 @@
 # Degenerate Preconditioned Proximal Point Algorithms: Example Code
 
 This repository contains the experimental source code for computing an optimal solution to a regularized Markowitz portfolio optimization problem with transaction penalties with different operator splitting methods used for numerical comparisons in:
-* K. Bredies, E. Chenchene, D. Lorenz, E. Naldi. Degenerate Preconditioned Proximal Point Algorithms. *SIAM J. Optim.* 2021 (in press). [ArXiv preprint](https://arxiv.org/abs/2109.11481)
+* K. Bredies, E. Chenchene, D. Lorenz, E. Naldi. Degenerate Preconditioned Proximal Point Algorithms. [*SIAM J. Optim.*, 32(3):2376—2401](https://doi.org/10.1137/21M1448112), 2022. [ArXiv preprint](https://arxiv.org/abs/2109.11481)
 
 To reproduce the results of the numerical experiment in Section 3.2, run:
 ```bash

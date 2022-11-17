@@ -9,7 +9,7 @@
 #
 #      K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 #      Degenerate Preconditioned Proximal Point Algorithms,
-#      SIAM Journal on Optimization, 2021. In press.
+#      SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -28,51 +28,56 @@ Run this script to reproduce the numerical experiment in Section 3.2 in:
 
 K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 Degenerate Preconditioned Proximal Point Algorithms.
-SIAM J. Optim. 2021 (in press).
+SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 """
 
-import numpy as np
-import optimization_methods as opt
 import time
+import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import optimization_methods as opt
 from preprocessing_data import generate_data
 from proximity_operators import proj_simplex
 
 
 def compare_algorithms(r, S, W0, x_true, t1, t2, delta, L, tol, maxit=3000):
     tic = time.time()
-    x_SeqFDRv1, Dist_SeqFDRv1 = opt.sequential_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Sequential FDR 1 ended in {} seconds".format(time.time()-tic))
+    _x_SeqFDRv1, Dist_SeqFDRv1 = opt.sequential_FDR_1(r, S, W0, x_true, t1, t2, delta,
+                                                          L, tol, maxit)
+    print(f"Sequential FDR 1 ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_SeqFDRv2, Dist_SeqFDRv2 = opt.sequential_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Sequential FDR 2 ended in {} seconds".format(time.time()-tic))
+    _x_SeqFDRv2, Dist_SeqFDRv2 = opt.sequential_FDR_2(r, S, W0, x_true, t1, t2, delta,
+                                                          L, tol, maxit)
+    print(f"Sequential FDR 2 ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_SeqFDRv3, Dist_SeqFDRv3 = opt.sequential_FDR_3(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Sequential FDR 3 ended in {} seconds".format(time.time()-tic))
+    _x_SeqFDRv3, Dist_SeqFDRv3 = opt.sequential_FDR_3(r, S, W0, x_true, t1, t2, delta,
+                                                          L, tol, maxit)
+    print(f"Sequential FDR 3 ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_GenBF, Dist_GenFB = opt.generalized_FB(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Generalized FB ended in {} seconds".format(time.time()-tic))
+    _x_GenBF, Dist_GenFB = opt.generalized_FB(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
+    print(f"Generalized FB ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_GenParFDR, Dist_ParFDR = opt.parallel_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Parallel FDR 1 ended in {} seconds".format(time.time()-tic))
+    _x_GenParFDR, Dist_ParFDR = opt.parallel_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
+    print(f"Parallel FDR 1 ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_GenParFDRv2, Dist_ParFDRv2 = opt.parallel_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Parallel FDR 2 ended in {} seconds".format(time.time()-tic))
+    _x_GenParFDRv2, Dist_ParFDRv2 = opt.parallel_FDR_2(r, S, W0, x_true, t1, t2, delta,
+                                                          L, tol, maxit)
+    print(f"Parallel FDR 2 ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_GenParDR, Dist_ParDR = opt.parallel_DR(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("Parallel DR ended in {} seconds".format(time.time()-tic))
+    _x_GenParDR, Dist_ParDR = opt.parallel_DR(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
+    print(f"Parallel DR ended in {time.time()-tic} seconds")
 
     tic = time.time()
-    x_PPXA, Dist_PPXA = opt.PPXA(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
-    print("PPXA ended in {} seconds".format(time.time()-tic))
-    return Dist_SeqFDRv1, Dist_SeqFDRv2, Dist_SeqFDRv3, Dist_GenFB, Dist_ParFDR, Dist_ParFDRv2, Dist_ParDR, Dist_PPXA
+    _x_PPXA, Dist_PPXA = opt.PPXA(r, S, W0, x_true, t1, t2, delta, L, tol, maxit)
+    print(f"PPXA ended in {time.time()-tic} seconds")
+    return Dist_SeqFDRv1, Dist_SeqFDRv2, Dist_SeqFDRv3, Dist_GenFB, Dist_ParFDR, \
+      Dist_ParFDRv2, Dist_ParDR, Dist_PPXA
 
 
 if __name__ == '__main__':
@@ -100,7 +105,8 @@ if __name__ == '__main__':
         if k == 0:
             print('\nStarting case 0. Initial portfolio position: random')
         else:
-            print('\nStarting case {}. Initial portfolio position: output of case {} considered on the same instance but 20 days later'.format(k, k-1))
+            print(f'\nStarting case {k}. Initial portfolio position: output of \
+case {k-1} considered on the same instance but 20 days later')
 
         W0 = np.copy(x_true)
         S, r = generate_data(returns, n, k, step, days)
@@ -112,7 +118,8 @@ if __name__ == '__main__':
         delta = 1
 
         x_true = opt.find_opt(r, S, W0, t1, t2, delta, L, x_true_maxit)
-        D_SeqFDRv1, D_SeqFDRv2, D_SeqFDRv3, D_GenFB, D_ParFDR, D_ParFDRv2, D_ParDR, D_PPXA = compare_algorithms(r, S, W0, x_true, t1, t2, delta, L, tol, maxit=iters)
+        D_SeqFDRv1, D_SeqFDRv2, D_SeqFDRv3, D_GenFB, D_ParFDR, D_ParFDRv2, \
+          D_ParDR, D_PPXA = compare_algorithms(r, S, W0, x_true, t1, t2, delta, L, tol, maxit=iters)
 
         plt.subplot(kmax, 2, 2*k+1)
         plt.semilogy(D_SeqFDRv1, 'b', ls=('dashed'), linewidth=3, label='SeqFDRv1')

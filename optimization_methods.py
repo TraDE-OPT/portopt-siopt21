@@ -9,7 +9,7 @@
 #
 #      K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 #      Degenerate Preconditioned Proximal Point Algorithms,
-#      SIAM Journal on Optimization, 2021. In press.
+#      SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ For details and references, see Section 3.2 in:
 
 K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 Degenerate Preconditioned Proximal Point Algorithms.
-SIAM J. Optim. 2021 (in press).
+SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 """
 
 import numpy as np
-from proximity_operators import func, shrink, shrink_power, proj_simplex
+from proximity_operators import shrink, shrink_power, proj_simplex
 
 
 def find_opt(r, S, W0, t1, t2, delta, L, maxit=350):
@@ -54,7 +54,7 @@ def find_opt(r, S, W0, t1, t2, delta, L, maxit=350):
     w1 = np.ones(K)/K
     w2 = np.ones(K)/K
 
-    for k in range(maxit):
+    for _k in range(maxit):
         x1 = proj_simplex(w1)
         x2 = shrink_power(t2*gamma/2, x1-gamma/2*C(x1)+(w2-w1)/2-W0)+W0
         x3 = shrink(t1*gamma, 2*x2-gamma*C(x2)-w2-W0)+W0
@@ -65,7 +65,7 @@ def find_opt(r, S, W0, t1, t2, delta, L, maxit=350):
     return x1
 
 
-def sequential_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def sequential_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the Seqeuntial Forward DRS method introduced in Section 3.1.2
     splitting the forward term according to point 1. in Section  3.2.
@@ -104,7 +104,7 @@ def sequential_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350)
     return (x1+x2+x3)/3, dists
 
 
-def sequential_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def sequential_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the Sequential Forward DRS method introduced in Section 3.1.2
     computing the forward term only once according to point 2. in Section  3.2.
@@ -144,7 +144,7 @@ def sequential_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350)
     return x3, dists
 
 
-def sequential_FDR_3(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def sequential_FDR_3(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the Seqeuntial Forward DRS method introduced in Section 3.1.2
     computing the forward term twice according to point 2. in Section  3.2.
@@ -186,7 +186,7 @@ def sequential_FDR_3(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350)
     return (x1+x2+x3)/3, dists
 
 
-def generalized_FB(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def generalized_FB(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the so-called Generalized Forward-Backward introduced in:
 
@@ -229,7 +229,7 @@ def generalized_FB(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
     return x, dists
 
 
-def parallel_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def parallel_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the Parallel Forward DRS method version 1, cf. Section 3.1.1
     '''
@@ -267,7 +267,7 @@ def parallel_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
     return x, dists
 
 
-def parallel_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def parallel_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the Parallel Forward DRS method version 2, cf. Section 3.1.1
     '''
@@ -306,7 +306,7 @@ def parallel_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
     return x, dists
 
 
-def parallel_DR(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def parallel_DR(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the Parallel DRS method.
     '''
@@ -348,11 +348,12 @@ def parallel_DR(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
     return x, dists
 
 
-def PPXA(r, S, W0, x_true, t1, t2, delta, L, tol=10**-10, maxit=350):
+def PPXA(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     '''
     Implements the so-called PPXA method introduced in:
 
-    N. Pustelnik, C. Chaux, and J.-C. Pesquet, Parallel proximal algorithm for image restoration using hybrid regularization,
+    N. Pustelnik, C. Chaux, and J.-C. Pesquet.
+    Parallel proximal algorithm for image restoration using hybrid regularization.
     IEEE Trans. Image Process., 20 (2011), pp. 2450–2462.
     '''
 

@@ -9,7 +9,7 @@
 #
 #      K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 #      Degenerate Preconditioned Proximal Point Algorithms,
-#      SIAM Journal on Optimization, 2021. In press.
+#      SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -30,14 +30,15 @@ For details and references, see Section 3.2 in:
 
 K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 Degenerate Preconditioned Proximal Point Algorithms.
-SIAM J. Control Optim. 2021 (in press).
+SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 """
 
 import numpy as np
 
 
 def func(w, S, r, delta, n, W0, t1, t2):
-    return np.dot(w, (S+delta*np.eye(n)) @ w)/2-np.dot(r, w)+t1*np.linalg.norm((w - W0), ord=1)+t2*np.linalg.norm(np.absolute(w - W0)**(3/2), ord=1)
+    return np.dot(w, (S+delta*np.eye(n)) @ w)/2-np.dot(r, w)\
+      +t1*np.linalg.norm((w - W0), ord=1)+t2*np.linalg.norm(np.absolute(w - W0)**(3/2), ord=1)
 
 
 def shrink(tau, w):

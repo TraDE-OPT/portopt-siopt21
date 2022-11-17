@@ -9,7 +9,7 @@
 #
 #      K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 #      Degenerate Preconditioned Proximal Point Algorithms,
-#      SIAM Journal on Optimization, 2021. In press.
+#      SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ For details and references, see Section 3.2 in:
 
 K. Bredies, E. Chenchene, D. Lorenz, E. Naldi.
 Degenerate Preconditioned Proximal Point Algorithms.
-SIAM J. Optim. 2021 (in press).
+SIAM Journal on Optimization, 32(3):2376-2401, 2022.
 """
 
 import numpy as np
