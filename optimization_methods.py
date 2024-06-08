@@ -41,26 +41,26 @@ def find_opt(r, S, W0, t1, t2, delta, L, maxit=350):
     K = len(r)  # number of assets
 
     I = np.eye(K)
-    B = 0.5*(S+delta*I)  # compute it only once
-    r = 0.5*r
+    B = 0.5 * (S + delta * I)  # compute it only once
+    r = 0.5 * r
 
     def C(w):
-        return B@w-r
+        return B @ w - r
 
     # Parameter tuning
-    gamma = 2/(L+delta)
+    gamma = 2 / (L + delta)
 
     # Initialize variables
-    w1 = np.ones(K)/K
-    w2 = np.ones(K)/K
+    w1 = np.ones(K) / K
+    w2 = np.ones(K) / K
 
     for _k in range(maxit):
         x1 = proj_simplex(w1)
-        x2 = shrink_power(t2*gamma/2, x1-gamma/2*C(x1)+(w2-w1)/2-W0)+W0
-        x3 = shrink(t1*gamma, 2*x2-gamma*C(x2)-w2-W0)+W0
+        x2 = shrink_power(t2 * gamma / 2, x1 - gamma / 2 * C(x1) + (w2 - w1) / 2 - W0) + W0
+        x3 = shrink(t1 * gamma, 2 * x2 - gamma * C(x2) - w2 - W0) + W0
 
-        w1 = w1+1.4*(x2-x1)
-        w2 = w2+1.4*(x3-x2)
+        w1 = w1 + 1.4 * (x2 - x1)
+        w2 = w2 + 1.4 * (x3 - x2)
 
     return x1
 
@@ -75,33 +75,33 @@ def sequential_FDR_1(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
     dists = []  # Initialize distances to minimum
 
     def C1(w):
-        return S@w-r
+        return S @ w - r
 
     def C2(w):
-        return delta*w
+        return delta * w
 
     # Parameter tuning
-    gamma = 1/(L+delta)
+    gamma = 1 / (L + delta)
 
     # Initialize variables
-    w1 = np.ones(K)/K
-    w2 = np.ones(K)/K
+    w1 = np.ones(K) / K
+    w2 = np.ones(K) / K
 
     k = 0
     err = 1
     while (k < maxit) and (err > tol):
-        x1 = shrink_power(t2*gamma, w1-W0)+W0
-        x2 = shrink(t1*gamma/2, x1-gamma/2*C1(x1)+(w2-w1)/2-W0)+W0
-        x3 = proj_simplex(2*x2-gamma*C2(x2)-w2)
+        x1 = shrink_power(t2 * gamma, w1 - W0) + W0
+        x2 = shrink(t1 * gamma / 2, x1 - gamma / 2 *C1(x1) + (w2 - w1) / 2 - W0) + W0
+        x3 = proj_simplex(2 * x2 - gamma * C2(x2) - w2)
 
-        w1 = w1+1.4*(x2-x1)
-        w2 = w2+1.4*(x3-x2)
+        w1 = w1 + 1.4 * (x2 - x1)
+        w2 = w2 + 1.4 * (x3 - x2)
 
-        err = np.linalg.norm(x3-x_true)
+        err = np.linalg.norm(x3 - x_true)
         dists.append(err)
-        k = k+1
+        k = k + 1
 
-    return (x1+x2+x3)/3, dists
+    return (x1 + x2 + x3) / 3, dists
 
 
 def sequential_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
@@ -115,17 +115,17 @@ def sequential_FDR_2(r, S, W0, x_true, t1, t2, delta, L, tol=1e-10, maxit=350):
 
     # Forward operator
     I = np.eye(K)
-    B = (S+delta*I)  # compute it only once
+    B = (S + delta * I)  # compute it only once
 
     def C(w):
-        return B@w-r
+        return B @ w - r
 
     # Parameter tuning
-    gamma = 1/(L+delta)
+    gamma = 1 / (L + delta)
 
     # Initialize variables
-    w1 = np.ones(K)/K
-    w2 = np.ones(K)/K
+    w1 = np.ones(K) / K
+    w2 = np.ones(K) / K
 
     k = 0
     err = 1
